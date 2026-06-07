@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Line - PNG to PDF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-1}
+.blue,.red{position:absolute;border-radius:50%;filter:blur(120px)}
+.blue{width:350px;height:350px;background:#00aaff33;left:-80px;top:100px}
+.red{width:350px;height:350px;background:#ff3b5c33;right:-80px;top:180px}
+nav{padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.logo .os{color:#00aaff;font-weight:bold}
+.logo .line{color:silver;font-weight:bold}
+.back{color:white;text-decoration:none;border:1px solid #444;padding:10px 18px;border-radius:12px}
+.container{max-width:1200px;margin:auto;padding:20px}
+h1{text-align:center;font-size:48px;margin-top:20px}
+.sub{text-align:center;color:#bbb;margin:10px 0 30px}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.panel{background:rgba(255,255,255,.05);border-radius:25px;padding:25px;border:1px solid rgba(255,255,255,.08)}
+.upload{border:2px dashed #00aaff;text-align:center;padding:50px;cursor:pointer}
+.preview{border:2px dashed #ff3b5c;min-height:250px}
+#fileInput{display:none}
+.zigzag{display:none;text-align:center;font-size:28px;margin:25px;color:#a855f7;animation:flash .5s infinite}
+@keyframes flash{50%{opacity:.3}}
+.btn{padding:15px 25px;border:none;border-radius:15px;cursor:pointer;color:#fff;background:linear-gradient(90deg,#00aaff,#ff3b5c)}
+.center{text-align:center;margin:25px}
+.gallery img{width:100px;height:100px;object-fit:cover;border-radius:10px;margin:5px}
+.success{display:none;text-align:center;padding:30px}
+.success h2{color:#4ade80;margin-bottom:15px}
+.downloadBtn{display:none}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blue"></div><div class="red"></div></div>
+
+<nav>
+<a href="index.html" class="back">← Back</a>
+<div class="logo"><span class="os">OS</span><span class="line"> Line</span></div>
+</nav>
+
+<div class="container">
+<h1>PNG ➜ PDF</h1>
+<p class="sub">Transform Images Into Professional Documents</p>
+
+<div class="workspace">
+<div class="panel">
+<label class="upload" for="fileInput">
+<h2>🖼 Upload PNG Files</h2>
+<p>Click to select PNG images</p>
+</label>
+<input type="file" id="fileInput" accept="image/png" multiple>
+<div class="gallery" id="gallery"></div>
+</div>
+
+<div class="panel preview">
+<h2>PDF Preview Area</h2>
+<p style="color:#bbb;margin-top:10px">Selected images will appear here.</p>
+<div id="previewArea"></div>
+</div>
+</div>
+
+<div class="center">
+<button class="btn" onclick="generatePDF()">⚡ Generate PDF</button>
+</div>
+
+<div class="zigzag" id="zigzag">PNG ⚡⚡⚡⚡⚡ PDF</div>
+
+<div class="success" id="success">
+<h2>✓ PDF Generated Successfully</h2>
+<p>Thank you for choosing OS Line.</p>
+<p>Your file has been processed successfully and is ready for download.</p>
+<p>We appreciate your support and look forward to assisting you with future file conversions.</p>
+<p style="margin-top:10px;color:#bbb">Powered by NICO</p>
+<br>
+<button id="downloadBtn" class="btn downloadBtn">⬇ Download PDF</button>
+</div>
+</div>
+
+<script>
+let files=[];
+let pdfBlob=null;
+
+fileInput.onchange=(e)=>{
+ files=[...e.target.files];
+ gallery.innerHTML="";
+ previewArea.innerHTML="";
+ files.forEach(f=>{
+   const img=document.createElement("img");
+   img.src=URL.createObjectURL(f);
+   gallery.appendChild(img);
+
+   const img2=document.createElement("img");
+   img2.src=img.src;
+   img2.style.width="140px";
+   img2.style.margin="10px";
+   previewArea.appendChild(img2);
+ });
+};
+
+async function generatePDF(){
+ if(files.length===0){alert("Upload PNG files first");return;}
+ zigzag.style.display="block";
+
+ const { jsPDF } = window.jspdf;
+ const pdf=new jsPDF();
+
+ for(let i=0;i<files.length;i++){
+   const imgData=await fileToDataURL(files[i]);
+   if(i>0) pdf.addPage();
+   const pageWidth = pdf.internal.pageSize.getWidth();
+const pageHeight = pdf.internal.pageSize.getHeight();
+
+const imgProps = pdf.getImageProperties(imgData);
+
+const imgWidth = imgProps.width;
+const imgHeight = imgProps.height;
+
+const ratio = Math.min(
+    pageWidth / imgWidth,
+    pageHeight / imgHeight
+);
+
+const pdfWidth = imgWidth * ratio;
+const pdfHeight = imgHeight * ratio;
+
+const x = (pageWidth - pdfWidth) / 2;
+const y = (pageHeight - pdfHeight) / 2;
+
+pdf.addImage(
+    imgData,
+    "PNG",
+    x,
+    y,
+    pdfWidth,
+    pdfHeight
+);
+ }
+
+ setTimeout(()=>{
+   zigzag.style.display="none";
+   success.style.display="block";
+   pdfBlob=pdf.output("blob");
+   downloadBtn.style.display="inline-block";
+ },2000);
+}
+
+downloadBtn.onclick=()=>{
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(pdfBlob);
+ a.download="OSLine-PDF.pdf";
+ a.click();
+};
+
+function fileToDataURL(file){
+ return new Promise(resolve=>{
+  const r=new FileReader();
+  r.onload=e=>resolve(e.target.result);
+  r.readAsDataURL(file);
+ });
+}
+</script>
+</body>
+</html>

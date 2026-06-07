@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Line - PDF to JPG</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#050505;color:#fff;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:-1}
+.red,.blue{position:absolute;border-radius:50%;filter:blur(120px)}
+.red{width:350px;height:350px;background:#ff3b5c33;left:-100px;top:100px}
+.blue{width:350px;height:350px;background:#00aaff33;right:-100px;top:200px}
+nav{display:flex;justify-content:space-between;padding:20px 40px}
+a{color:white;text-decoration:none}
+.logo .os{color:#00aaff;font-weight:bold}
+.logo .line{color:silver;font-weight:bold}
+.container{max-width:1200px;margin:auto;padding:20px}
+h1{text-align:center;font-size:50px}
+.sub{text-align:center;color:#bbb;margin:10px 0 30px}
+.upload{border:2px dashed #ff3b5c;padding:50px;text-align:center;border-radius:25px;cursor:pointer;background:rgba(255,255,255,.05)}
+#pdfInput{display:none}
+.btn{padding:14px 24px;border:none;border-radius:15px;color:white;cursor:pointer;background:linear-gradient(90deg,#ff3b5c,#00aaff)}
+.center{text-align:center;margin:25px}
+#gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px;margin-top:20px}
+.card{background:rgba(255,255,255,.05);padding:10px;border-radius:15px}
+.card img{width:100%;border-radius:10px}
+.success{display:none;text-align:center;padding:25px}
+</style>
+</head>
+<body>
+
+<div class="bg">
+<div class="red"></div>
+<div class="blue"></div>
+</div>
+
+<nav>
+<a href="index.html">← Back</a>
+<div class="logo"><span class="os">OS</span><span class="line"> Line</span></div>
+</nav>
+
+<div class="container">
+<h1>PDF ➜ JPG</h1>
+<p class="sub">Extract Every PDF Page As High Quality JPG Images</p>
+
+<label class="upload" for="pdfInput">
+<h2>📄 Upload PDF</h2>
+<p>Click to select a PDF file</p>
+</label>
+
+<input type="file" id="pdfInput" accept="application/pdf">
+
+<div class="center">
+<button class="btn" onclick="convertPDF()">⚡ Extract Images</button>
+</div>
+
+<div id="status" class="center"></div>
+<div id="gallery"></div>
+
+<div class="success" id="success">
+<h2>✓ Images Extracted Successfully</h2>
+<p>Thank you for choosing OS Line.</p>
+<p>Your PDF pages have been converted into high-quality JPG images and are ready for download.</p>
+<p style="margin-top:10px">Powered by NICO</p>
+</div>
+
+</div>
+
+<script>
+let pdfFile;
+
+document.getElementById('pdfInput').addEventListener('change',e=>{
+ pdfFile=e.target.files[0];
+});
+
+async function convertPDF(){
+
+ if(!pdfFile){
+   alert("Please upload a PDF file.");
+   return;
+ }
+
+ const gallery=document.getElementById("gallery");
+ gallery.innerHTML="";
+
+ const data=await pdfFile.arrayBuffer();
+ const pdf=await pdfjsLib.getDocument({data}).promise;
+
+ for(let pageNum=1; pageNum<=pdf.numPages; pageNum++){
+
+   document.getElementById("status").innerHTML=
+   "Extracting Page "+pageNum+" of "+pdf.numPages;
+
+   const page=await pdf.getPage(pageNum);
+
+   const viewport=page.getViewport({scale:2});
+
+   const canvas=document.createElement("canvas");
+   const ctx=canvas.getContext("2d");
+
+   canvas.width=viewport.width;
+   canvas.height=viewport.height;
+
+   await page.render({
+      canvasContext:ctx,
+      viewport:viewport
+   }).promise;
+
+   const jpg=canvas.toDataURL("image/jpeg",1.0);
+
+   const card=document.createElement("div");
+   card.className="card";
+
+   card.innerHTML=`
+   <img src="${jpg}">
+   <div style="padding:10px;text-align:center">
+      <button class="btn" onclick="downloadImage('${jpg}','page-${pageNum}.jpg')">
+      Download Page ${pageNum}
+      </button>
+   </div>`;
+
+   gallery.appendChild(card);
+ }
+
+ document.getElementById("status").innerHTML="";
+ document.getElementById("success").style.display="block";
+}
+
+function downloadImage(url,name){
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=name;
+ a.click();
+}
+</script>
+
+</body>
+</html>

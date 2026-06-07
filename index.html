@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Line - All Your File Tools</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+/* Animated Background */
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    animation:float 15s infinite ease-in-out;
+}
+
+.blob1{
+    width:400px;
+    height:400px;
+    background:#7c3aed;
+    top:-100px;
+    left:-100px;
+}
+
+.blob2{
+    width:350px;
+    height:350px;
+    background:#9333ea;
+    bottom:-100px;
+    right:-100px;
+    animation-delay:5s;
+}
+
+.blob3{
+    width:300px;
+    height:300px;
+    background:#6d28d9;
+    top:40%;
+    left:50%;
+    animation-delay:10s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px) translateX(0px);
+    }
+    50%{
+        transform:translateY(-50px) translateX(50px);
+    }
+}
+
+/* Navbar */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:25px 8%;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    color:#cfcfcf;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#a855f7;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:800;
+}
+
+.logo .os{
+    color:#00aaff;
+    text-shadow:0 0 20px #00aaff;
+}
+
+.logo .line{
+    color:silver;
+}
+
+/* Hero */
+
+.hero{
+    text-align:center;
+    padding:80px 20px 50px;
+}
+
+.hero h1{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:#bdbdbd;
+    font-size:18px;
+    max-width:700px;
+    margin:auto;
+}
+
+/* Search */
+
+.search-box{
+    max-width:700px;
+    margin:40px auto;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    padding:20px 25px;
+    border:none;
+    outline:none;
+    border-radius:50px;
+
+    color:white;
+    font-size:18px;
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(168,85,247,.4);
+
+    box-shadow:
+    0 0 30px rgba(168,85,247,.25);
+}
+
+.search-box input::placeholder{
+    color:#bdbdbd;
+}
+
+/* Section */
+
+.section-title{
+    text-align:center;
+    font-size:30px;
+    margin-top:20px;
+    margin-bottom:40px;
+}
+
+/* Cards */
+
+.tools{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+
+    padding-bottom:80px;
+}
+
+.card{
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    padding:30px;
+
+    transition:.4s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+
+    border-color:#a855f7;
+
+    box-shadow:
+    0 0 30px rgba(168,85,247,.35);
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-size:22px;
+}
+
+.card p{
+    color:#bdbdbd;
+    font-size:14px;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    padding:40px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+footer h2{
+    margin-bottom:10px;
+}
+
+footer p{
+    color:#bdbdbd;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:38px;
+}
+
+.logo{
+    font-size:24px;
+}
+
+nav{
+    flex-direction:column;
+    gap:15px;
+}
+
+.nav-links{
+    gap:15px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+</div>
+
+<nav>
+
+    <div class="nav-links">
+       <a href="index.html">Home</a>
+<a href="tools.html">Tools</a>
+<a href="categories.html">Categories</a>
+    </div>
+
+    <div class="logo">
+        <span class="os">OS</span>
+        <span class="line"> Line</span>
+    </div>
+
+</nav>
+
+<section class="hero">
+
+    <h1>All Your File Tools In One Place</h1>
+
+    <p>
+        Convert, optimize and manage files online with a fast,
+        modern and simple experience.
+    </p>
+
+</section>
+
+<div class="search-box">
+    <input
+    type="text"
+    id="search"
+    placeholder="🔍 Search tools..."
+    onkeyup="searchTools()">
+    <div id="toolList">
+
+<a href="png-to-pdf.html" class="tool">
+    PNG to PDF
+</a>
+
+<a href="pdf-to-jpg.html" class="tool">
+    PDF to JPG
+</a>
+
+</div>
+</div>
+
+<h2 class="section-title">Popular Tools</h2>
+
+<section class="tools">
+
+   
+
+   <a href="png-to-pdf.html" class="card">
+    <h3>🖼 PNG to PDF</h3>
+    <p>Convert PNG images into PDF files.</p>
+</a>
+
+    <a href="pdf-to-jpg.html" class="card">
+    <h3>📄 PDF to JPG</h3>
+    <p>Convert PDF pages into JPG images.</p>
+</a>
+
+    
+    
+   
+</a>
+</section>
+
+<footer>
+
+    <h2>
+        <span style="color:#00aaff;">OS</span>
+        <span style="color:silver;"> Line</span>
+    </h2>
+
+    <p>Tools That Work.</p>
+
+    <br>
+
+    <p>Powered by NICO</p>
+
+    <br>
+
+    <p>© 2026 OS Line. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+<script>
+
+function searchTools(){
+
+    let input =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+    let tools =
+    document.querySelectorAll(".tool");
+
+    tools.forEach(tool=>{
+
+        if(
+        tool.innerText
+        .toLowerCase()
+        .includes(input)
+        ){
+            tool.style.display="block";
+        }
+        else{
+            tool.style.display="none";
+        }
+
+    });
+
+}
+
+</script>
+</html>
