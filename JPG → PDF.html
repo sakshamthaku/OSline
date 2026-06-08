@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Line - JPG to PDF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#050505;color:#fff;min-height:100vh}
+.container{max-width:1100px;margin:auto;padding:20px}
+nav{display:flex;justify-content:space-between;padding:20px 0}
+a{color:#fff;text-decoration:none}
+.logo .os{color:#00aaff;font-weight:bold}.logo .line{color:silver;font-weight:bold}
+h1{text-align:center;font-size:48px}
+p.sub{text-align:center;color:#bbb;margin:10px 0 30px}
+.upload{border:2px dashed #ff9f1c;border-radius:20px;padding:40px;text-align:center;background:rgba(255,255,255,.05);cursor:pointer}
+#fileInput{display:none}
+.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;margin-top:20px}
+.preview img{width:100%;height:140px;object-fit:cover;border-radius:12px}
+.btn{display:block;margin:25px auto;padding:14px 24px;border:none;border-radius:12px;color:#fff;background:linear-gradient(90deg,#ff9f1c,#ff3b5c);cursor:pointer}
+#status{text-align:center;margin:15px}
+#success{display:none;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="container">
+<nav>
+<a href="index.html">← Back</a>
+<div class="logo"><span class="os">OS</span> <span class="line">Line</span></div>
+</nav>
+
+<h1>JPG ➜ PDF</h1>
+<p class="sub">Convert JPG Images Into PDF Documents</p>
+
+<label class="upload" for="fileInput">
+<h2>📷 Upload JPG Images</h2>
+<p>Select one or more JPG files</p>
+</label>
+<input id="fileInput" type="file" accept=".jpg,.jpeg,image/jpeg" multiple>
+
+<div id="preview" class="preview"></div>
+
+<button class="btn" onclick="generatePDF()">⚡ Generate PDF</button>
+
+<div id="status"></div>
+
+<div id="success">
+<h2>✓ PDF Generated Successfully</h2>
+<p>Thank you for choosing OS Line.</p>
+<p>Your file has been processed successfully and is ready for download.</p>
+<br>
+<button id="downloadBtn" class="btn">⬇ Download PDF</button>
+</div>
+</div>
+
+<script>
+let files=[];
+let pdfBlob=null;
+
+document.getElementById('fileInput').addEventListener('change',e=>{
+ files=[...e.target.files];
+ const preview=document.getElementById('preview');
+ preview.innerHTML='';
+ files.forEach(f=>{
+   const img=document.createElement('img');
+   img.src=URL.createObjectURL(f);
+   preview.appendChild(img);
+ });
+});
+
+function fileToDataURL(file){
+ return new Promise(resolve=>{
+   const r=new FileReader();
+   r.onload=e=>resolve(e.target.result);
+   r.readAsDataURL(file);
+ });
+}
+
+async function generatePDF(){
+ if(files.length===0){alert('Upload JPG files first');return;}
+
+ const {jsPDF}=window.jspdf;
+ const pdf=new jsPDF();
+
+ for(let i=0;i<files.length;i++){
+   document.getElementById('status').innerText=`Creating page ${i+1} of ${files.length}`;
+
+   const data=await fileToDataURL(files[i]);
+   const img=new Image();
+
+   await new Promise(res=>{
+     img.onload=res;
+     img.src=data;
+   });
+
+   const pw=pdf.internal.pageSize.getWidth();
+   const ph=pdf.internal.pageSize.getHeight();
+
+   const ratio=Math.min(pw/img.width, ph/img.height);
+   const w=img.width*ratio;
+   const h=img.height*ratio;
+
+   if(i>0) pdf.addPage();
+
+   pdf.addImage(data,'JPEG',(pw-w)/2,(ph-h)/2,w,h);
+ }
+
+ pdfBlob=pdf.output('blob');
+ document.getElementById('status').innerText='';
+ document.getElementById('success').style.display='block';
+}
+
+document.addEventListener('click',e=>{
+ if(e.target && e.target.id==='downloadBtn'){
+   const a=document.createElement('a');
+   a.href=URL.createObjectURL(pdfBlob);
+   a.download='OSLine-JPG-to-PDF.pdf';
+   a.click();
+ }
+});
+</script>
+</body>
+</html>
