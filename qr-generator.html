@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Line QR Generator Pro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* PART 2 CSS WILL COME HERE */
+
+</style>
+
+</head>
+<body>
+
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<!-- Navbar -->
+<nav>
+
+<div class="logo">
+OS <span>Line</span>
+</div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="tools.html">All Tools</a>
+<a href="#">About</a>
+<a href="#">Contact</a>
+</div>
+
+<a href="index.html" class="back-btn">
+← Back to Home
+</a>
+
+</nav>
+
+
+<!-- Main -->
+<div class="container">
+
+<!-- Left Panel -->
+<div class="left-panel">
+
+<h1>
+QR Code <span>Generator</span>
+</h1>
+
+<p>Create beautiful QR codes for URLs, text and more.</p>
+
+
+<!-- Content -->
+<div class="card">
+
+<h3>1. Enter Content</h3>
+
+<div class="tabs">
+
+<button class="tab active">
+URL
+</button>
+
+<button class="tab">
+Text
+</button>
+
+<button class="tab">
+WiFi
+</button>
+
+<button class="tab">
+Email
+</button>
+
+<button class="tab">
+Phone
+</button>
+
+<button class="tab">
+SMS
+</button>
+
+<button class="tab">
+vCard
+</button>
+
+</div>
+
+<input
+type="text"
+id="qrInput"
+placeholder="https://example.com">
+
+</div>
+
+
+<!-- Customize -->
+<div class="card">
+
+<h3>2. Customize Design</h3>
+
+<label>Foreground Color</label>
+<input type="color" id="fgColor" value="#7C3AED">
+
+<label>Background Color</label>
+<input type="color" id="bgColor" value="#ffffff">
+
+<label>Logo (Optional)</label>
+<input type="file">
+
+</div>
+
+</div>
+
+
+
+<!-- Right Panel -->
+<div class="right-panel">
+
+<h3>3. QR Code Preview</h3>
+
+<div class="preview">
+
+<div id="qrcode">
+
+QR PREVIEW
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="download-btn">
+⬇ Download QR Code
+</button>
+
+<button class="copy-btn">
+📋 Copy
+</button>
+
+<button class="share-btn">
+🔗 Share
+</button>
+
+</div>
+
+<div class="features">
+
+<div class="feature">
+💎 High Quality
+</div>
+
+<div class="feature">
+🎨 Custom Design
+</div>
+
+<div class="feature">
+⚡ Fast Generation
+</div>
+
+<div class="feature">
+🆓 100% Free
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 OS Line • Powered by NICO
+
+</footer>
+
+<script>
+
+/* PART 3 JAVASCRIPT WILL COME HERE */
+
+</script>
+
+</body>
+</html>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+position:relative;
+}
+
+/* Background Glow */
+
+.bg-glow{
+position:fixed;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+}
+
+.glow1{
+width:350px;
+height:350px;
+background:#7c3aed55;
+top:-100px;
+left:-100px;
+animation:float1 8s infinite ease-in-out;
+}
+
+.glow2{
+width:400px;
+height:400px;
+background:#00bfff33;
+right:-100px;
+bottom:-100px;
+animation:float2 10s infinite ease-in-out;
+}
+
+@keyframes float1{
+50%{
+transform:translateY(50px);
+}
+}
+
+@keyframes float2{
+50%{
+transform:translateY(-50px);
+}
+}
+
+/* Navbar */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 5%;
+border-bottom:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+}
+
+.logo{
+font-size:35px;
+font-weight:700;
+}
+
+.logo span{
+color:#7c3aed;
+}
+
+.nav-links{
+display:flex;
+gap:40px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:#7c3aed;
+}
+
+.back-btn{
+padding:14px 25px;
+border-radius:15px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.1);
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+.back-btn:hover{
+box-shadow:0 0 20px #7c3aed;
+}
+
+/* Main */
+
+.container{
+display:grid;
+grid-template-columns:1fr 1.3fr;
+gap:35px;
+padding:40px 5%;
+}
+
+/* Cards */
+
+.card,
+.right-panel{
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(30px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:25px;
+padding:30px;
+margin-bottom:25px;
+box-shadow:
+0 0 30px rgba(124,58,237,.12);
+}
+
+/* Heading */
+
+h1{
+font-size:55px;
+margin-bottom:10px;
+}
+
+h1 span{
+background:linear-gradient(
+90deg,
+#7c3aed,
+#00bfff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+p{
+color:#bbb;
+margin-bottom:25px;
+}
+
+/* Tabs */
+
+.tabs{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:20px 0;
+}
+
+.tab{
+background:#111827;
+border:none;
+color:white;
+padding:12px 20px;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.tab:hover,
+.active{
+background:#7c3aed;
+}
+
+/* Inputs */
+
+input{
+width:100%;
+padding:18px;
+border-radius:15px;
+background:#111827;
+border:1px solid rgba(255,255,255,.08);
+color:white;
+margin-top:15px;
+margin-bottom:20px;
+}
+
+input[type=color]{
+height:55px;
+}
+
+/* Preview */
+
+.preview{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px;
+}
+
+#qrcode{
+width:350px;
+height:350px;
+background:white;
+border-radius:30px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:black;
+font-size:25px;
+
+box-shadow:
+0 0 30px #7c3aed,
+0 0 80px rgba(124,58,237,.4);
+}
+
+/* Buttons */
+
+.buttons{
+display:flex;
+gap:15px;
+margin-top:30px;
+}
+
+.download-btn,
+.copy-btn,
+.share-btn{
+flex:1;
+padding:18px;
+border:none;
+border-radius:18px;
+cursor:pointer;
+font-size:16px;
+transition:.3s;
+}
+
+.download-btn{
+background:
+linear-gradient(
+90deg,
+#c026d3,
+#2563eb);
+color:white;
+}
+
+.copy-btn,
+.share-btn{
+background:#111827;
+color:white;
+}
+
+.download-btn:hover{
+transform:translateY(-4px);
+box-shadow:0 0 25px #7c3aed;
+}
+
+/* Features */
+
+.features{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+margin-top:30px;
+}
+
+.feature{
+background:rgba(255,255,255,.03);
+padding:20px;
+border-radius:18px;
+text-align:center;
+}
+
+/* Footer */
+
+footer{
+text-align:center;
+padding:30px;
+color:#888;
+}
+
+/* Mobile */
+
+@media(max-width:1000px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.nav-links{
+display:none;
+}
+
+.buttons{
+flex-direction:column;
+}
+
+.features{
+grid-template-columns:1fr;
+}
+
+h1{
+font-size:40px;
+}
+
+#qrcode{
+width:280px;
+height:280px;
+}
+
+.back-btn{
+padding:12px 18px;
+font-size:14px;
+}
+
+}
+
+/* Small Phones */
+
+@media(max-width:500px){
+
+nav{
+padding:20px;
+}
+
+h1{
+font-size:33px;
+}
+
+.card,
+.right-panel{
+padding:20px;
+}
+
+#qrcode{
+width:230px;
+height:230px;
+}
+
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+
+// Elements
+
+const qrInput = document.getElementById("qrInput");
+const qrcodeDiv = document.getElementById("qrcode");
+
+let qr;
+
+// Generate QR
+
+function generateQR(){
+
+qrcodeDiv.innerHTML = "";
+
+let value = qrInput.value.trim();
+
+if(value===""){
+
+qrcodeDiv.innerHTML="QR PREVIEW";
+return;
+
+}
+
+qr = new QRCode(qrcodeDiv,{
+text:value,
+width:300,
+height:300,
+colorDark:document.getElementById("fgColor").value,
+colorLight:document.getElementById("bgColor").value,
+correctLevel:QRCode.CorrectLevel.H
+});
+
+}
+
+// Live Generate
+
+qrInput.addEventListener("keyup",generateQR);
+
+document.getElementById("fgColor")
+.addEventListener("input",generateQR);
+
+document.getElementById("bgColor")
+.addEventListener("input",generateQR);
+
+// Generate default
+
+generateQR();
+
+
+
+// Copy Text
+
+document.querySelector(".copy-btn")
+.addEventListener("click",()=>{
+
+navigator.clipboard.writeText(qrInput.value);
+
+alert("Copied!");
+
+});
+
+
+
+// Share
+
+document.querySelector(".share-btn")
+.addEventListener("click",()=>{
+
+if(navigator.share){
+
+navigator.share({
+
+title:"OS Line QR Code",
+
+text:qrInput.value
+
+});
+
+}
+else{
+
+alert("Sharing not supported");
+
+}
+
+});
+
+
+
+// Download PNG
+
+document.querySelector(".download-btn")
+.addEventListener("click",()=>{
+
+let img = qrcodeDiv.querySelector("img");
+
+if(!img){
+
+alert("Generate QR first");
+
+return;
+
+}
+
+let a = document.createElement("a");
+
+a.href = img.src;
+
+a.download = "OSLine-QRCode.png";
+
+a.click();
+
+});
+
+</script>
