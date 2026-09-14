@@ -8,29 +8,639 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#050505;color:#fff;min-height:100vh}
-.bg{position:fixed;inset:0;z-index:-1}
-.red,.blue{position:absolute;border-radius:50%;filter:blur(120px)}
-.red{width:350px;height:350px;background:#ff3b5c33;left:-100px;top:100px}
-.blue{width:350px;height:350px;background:#00aaff33;right:-100px;top:200px}
-nav{display:flex;justify-content:space-between;padding:20px 40px}
-a{color:white;text-decoration:none}
-.logo .os{color:#00aaff;font-weight:bold}
-.logo .line{color:silver;font-weight:bold}
-.container{max-width:1200px;margin:auto;padding:20px}
-h1{text-align:center;font-size:50px}
-.sub{text-align:center;color:#bbb;margin:10px 0 30px}
-.upload{border:2px dashed #ff3b5c;padding:50px;text-align:center;border-radius:25px;cursor:pointer;background:rgba(255,255,255,.05)}
-#pdfInput{display:none}
-.btn{padding:14px 24px;border:none;border-radius:15px;color:white;cursor:pointer;background:linear-gradient(90deg,#ff3b5c,#00aaff)}
-.center{text-align:center;margin:25px}
-#gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px;margin-top:20px}
-.card{background:rgba(255,255,255,.05);padding:10px;border-radius:15px}
-.card img{width:100%;border-radius:10px}
-.success{display:none;text-align:center;padding:25px}
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(34, 197, 94, 0.09),
+            transparent 38%
+        ),
+        #07100b;
+
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.red,
+.blue {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+}
+
+.red {
+    width: 350px;
+    height: 350px;
+    background: rgba(34, 197, 94, 0.08);
+    left: -120px;
+    top: 100px;
+}
+
+.blue {
+    width: 350px;
+    height: 350px;
+    background: rgba(74, 222, 128, 0.06);
+    right: -120px;
+    top: 200px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    width: 100%;
+    max-width: 1250px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 30px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+nav a {
+    color: #b7c4bb;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    padding: 9px 13px;
+
+    border-radius: 10px;
+
+    transition: 0.2s ease;
+}
+
+nav a:hover {
+    color: #ffffff;
+    background: rgba(34, 197, 94, 0.10);
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo .os {
+    color: #22c55e;
+    font-weight: 900;
+}
+
+.logo .line {
+    color: #d7dfda;
+    font-weight: 700;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 45px 25px 60px;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+h1 {
+    text-align: center;
+
+    font-size: clamp(36px, 6vw, 58px);
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 12px;
+}
+
+.sub {
+    text-align: center;
+
+    color: #9eafa4;
+
+    font-size: 16px;
+
+    margin: 0 auto 38px;
+
+    max-width: 650px;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   UPLOAD AREA
+========================= */
+
+.upload {
+    display: block;
+
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding: 55px 25px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    border: 2px dashed rgba(34, 197, 94, 0.55);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.09),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.upload:hover {
+    border-color: #22c55e;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.14),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    transform: translateY(-2px);
+}
+
+.upload h2 {
+    font-size: clamp(20px, 4vw, 27px);
+
+    color: #ffffff;
+
+    margin-bottom: 9px;
+}
+
+.upload p {
+    color: #91a198;
+
+    font-size: 14px;
+}
+
+#pdfInput {
+    display: none;
+}
+
+/* =========================
+   CENTER BUTTON AREA
+========================= */
+
+.center {
+    text-align: center;
+
+    margin: 28px auto;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn {
+    padding: 14px 25px;
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    border-radius: 13px;
+
+    color: #041008;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4ade80,
+            #22c55e
+        );
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(34, 197, 94, 0.15);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 32px rgba(34, 197, 94, 0.25);
+
+    filter: brightness(1.05);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   STATUS
+========================= */
+
+#status {
+    min-height: 25px;
+
+    color: #86efac;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+/* =========================
+   GALLERY
+========================= */
+
+#gallery {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+/* =========================
+   IMAGE CARD
+========================= */
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    padding: 11px;
+
+    border-radius: 17px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.25);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(34, 197, 94, 0.35);
+}
+
+.card img {
+    width: 100%;
+
+    display: block;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    object-fit: contain;
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+.success {
+    display: none;
+
+    width: 100%;
+
+    max-width: 750px;
+
+    margin: 35px auto 0;
+
+    padding: 32px 25px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(34, 197, 94, 0.22);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.11),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+.success h2 {
+    color: #4ade80;
+
+    font-size: clamp(21px, 4vw, 29px);
+
+    margin-bottom: 13px;
+}
+
+.success p {
+    color: #aab7af;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin: 5px auto;
+
+    max-width: 600px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    nav {
+        padding: 17px 20px;
+    }
+
+    .container {
+        padding:
+            35px 18px 50px;
+    }
+
+    h1 {
+        font-size: 43px;
+    }
+
+    .sub {
+        font-size: 15px;
+
+        margin-bottom: 30px;
+    }
+
+    .upload {
+        padding: 45px 20px;
+    }
+
+    #gallery {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 13px;
+    }
+
+    .card {
+        padding: 8px;
+        border-radius: 14px;
+    }
+
+    .card img {
+        border-radius: 10px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    nav {
+        padding:
+            13px 13px 17px;
+    }
+
+    nav a {
+        font-size: 13px;
+
+        padding:
+            8px 10px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .container {
+        padding:
+            30px 13px 45px;
+    }
+
+    h1 {
+        font-size: 36px;
+
+        letter-spacing: -1px;
+    }
+
+    .sub {
+        font-size: 13px;
+
+        padding: 0 8px;
+
+        margin-bottom: 25px;
+    }
+
+    .upload {
+        padding:
+            38px 15px;
+
+        border-radius: 18px;
+    }
+
+    .upload h2 {
+        font-size: 21px;
+    }
+
+    .upload p {
+        font-size: 13px;
+    }
+
+    .center {
+        margin:
+            22px auto;
+    }
+
+    .btn {
+        width: 100%;
+
+        max-width: 360px;
+
+        padding:
+            14px 18px;
+
+        font-size: 14px;
+    }
+
+    #gallery {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+
+        margin-top: 20px;
+    }
+
+    .card {
+        padding: 7px;
+
+        border-radius: 12px;
+    }
+
+    .card img {
+        border-radius: 8px;
+    }
+
+    .success {
+        padding:
+            27px 16px;
+
+        border-radius: 17px;
+
+        margin-top: 28px;
+    }
+
+    .success h2 {
+        font-size: 22px;
+    }
+
+    .success p {
+        font-size: 13px;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 350px) {
+
+    .logo {
+        font-size: 17px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 31px;
+    }
+
+    .upload {
+        padding:
+            32px 12px;
+    }
+
+    .upload h2 {
+        font-size: 19px;
+    }
+
+    #gallery {
+        gap: 8px;
+    }
+
+    .card {
+        padding: 5px;
+    }
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #07100b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #14532d;
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #22c55e;
+}
 </style>
 </head>
+
 <body>
 
 <div class="bg">
@@ -40,37 +650,74 @@ h1{text-align:center;font-size:50px}
 
 <nav>
 <a href="index.html">← Back</a>
-<div class="logo"><span class="os">OS</span><span class="line"> Line</span></div>
+
+<div class="logo">
+<span class="os">OS</span>
+<span class="line"> Line</span>
+</div>
 </nav>
 
 <div class="container">
+
 <h1>PDF ➜ JPG</h1>
-<p class="sub">Extract Every PDF Page As High Quality JPG Images</p>
+
+<p class="sub">
+Extract Every PDF Page As High Quality JPG Images
+</p>
 
 <label class="upload" for="pdfInput">
+
 <h2>📄 Upload PDF</h2>
-<p>Click to select a PDF file</p>
+
+<p>
+Click to select a PDF file
+</p>
+
 </label>
 
-<input type="file" id="pdfInput" accept="application/pdf">
+<input
+type="file"
+id="pdfInput"
+accept="application/pdf"
+>
 
 <div class="center">
-<button class="btn" onclick="convertPDF()">⚡ Extract Images</button>
+
+<button
+class="btn"
+onclick="convertPDF()"
+>
+⚡ Extract Images
+</button>
+
 </div>
 
 <div id="status" class="center"></div>
+
 <div id="gallery"></div>
 
 <div class="success" id="success">
+
 <h2>✓ Images Extracted Successfully</h2>
-<p>Thank you for choosing OS Line.</p>
-<p>Your PDF pages have been converted into high-quality JPG images and are ready for download.</p>
-<p style="margin-top:10px">Powered by NICO</p>
+
+<p>
+Thank you for choosing OS Line.
+</p>
+
+<p>
+Your PDF pages have been converted into high-quality JPG images and are ready for download.
+</p>
+
+<p style="margin-top:10px">
+Powered by NICO
+</p>
+
 </div>
 
 </div>
 
 <script>
+
 let pdfFile;
 
 document.getElementById('pdfInput').addEventListener('change',e=>{
@@ -136,6 +783,7 @@ function downloadImage(url,name){
  a.download=name;
  a.click();
 }
+
 </script>
 
 </body>
