@@ -4,121 +4,714 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OS Line - JPG to PDF</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#050505;color:#fff;min-height:100vh}
-.container{max-width:1100px;margin:auto;padding:20px}
-nav{display:flex;justify-content:space-between;padding:20px 0}
-a{color:#fff;text-decoration:none}
-.logo .os{color:#00aaff;font-weight:bold}.logo .line{color:silver;font-weight:bold}
-h1{text-align:center;font-size:48px}
-p.sub{text-align:center;color:#bbb;margin:10px 0 30px}
-.upload{border:2px dashed #ff9f1c;border-radius:20px;padding:40px;text-align:center;background:rgba(255,255,255,.05);cursor:pointer}
-#fileInput{display:none}
-.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;margin-top:20px}
-.preview img{width:100%;height:140px;object-fit:cover;border-radius:12px}
-.btn{display:block;margin:25px auto;padding:14px 24px;border:none;border-radius:12px;color:#fff;background:linear-gradient(90deg,#ff9f1c,#ff3b5c);cursor:pointer}
-#status{text-align:center;margin:15px}
-#success{display:none;text-align:center;padding:20px}
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background:
+        radial-gradient(circle at top, rgba(0, 255, 120, 0.08), transparent 35%),
+        #07100b;
+    color: #ffffff;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 55px;
+}
+
+nav a {
+    color: #b9c8bf;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 9px 13px;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+nav a:hover {
+    color: #ffffff;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    user-select: none;
+}
+
+.logo .os {
+    color: #22c55e;
+    font-weight: 800;
+}
+
+.logo .line {
+    color: #d9e2dc;
+    font-weight: 700;
+}
+
+/* =========================
+   HERO
+========================= */
+
+h1 {
+    text-align: center;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 12px;
+}
+
+h1::first-letter {
+    color: #22c55e;
+}
+
+p.sub {
+    text-align: center;
+    color: #9eafa4;
+    font-size: 16px;
+    margin: 0 auto 40px;
+}
+
+/* =========================
+   UPLOAD CARD
+========================= */
+
+.upload {
+    display: block;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 55px 25px;
+    text-align: center;
+
+    border: 2px dashed rgba(34, 197, 94, 0.55);
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.09),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.upload:hover {
+    border-color: #22c55e;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.14),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    transform: translateY(-2px);
+}
+
+.upload h2 {
+    font-size: clamp(20px, 4vw, 27px);
+    margin-bottom: 9px;
+    color: #ffffff;
+}
+
+.upload p {
+    color: #9eafa4;
+    font-size: 14px;
+}
+
+/* =========================
+   HIDDEN FILE INPUT
+========================= */
+
+#fileInput {
+    display: none;
+}
+
+/* =========================
+   PREVIEW AREA
+========================= */
+
+.preview {
+    width: 100%;
+    max-width: 1000px;
+    margin: 28px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(150px, 1fr)
+    );
+
+    gap: 16px;
+}
+
+/* =========================
+   PREVIEW IMAGE
+========================= */
+
+.preview img {
+    width: 100%;
+    height: 155px;
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    background: #0c1710;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.preview img:hover {
+    transform: translateY(-3px);
+    border-color: rgba(34, 197, 94, 0.5);
+}
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+.btn {
+    display: block;
+
+    margin: 32px auto 20px;
+
+    padding: 14px 25px;
+
+    border: 1px solid rgba(34, 197, 94, 0.3);
+
+    border-radius: 13px;
+
+    color: #041008;
+
+    background: linear-gradient(
+        135deg,
+        #4ade80,
+        #22c55e
+    );
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(34, 197, 94, 0.16);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 32px rgba(34, 197, 94, 0.25);
+
+    filter: brightness(1.05);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   STATUS
+========================= */
+
+#status {
+    text-align: center;
+
+    min-height: 24px;
+
+    margin: 15px auto;
+
+    color: #86efac;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =========================
+   SUCCESS CARD
+========================= */
+
+#success {
+    display: none;
+
+    max-width: 700px;
+
+    margin: 35px auto 20px;
+
+    padding: 32px 25px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(34, 197, 94, 0.22);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34, 197, 94, 0.11),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.22);
+}
+
+#success h2 {
+    color: #4ade80;
+
+    font-size: clamp(21px, 4vw, 28px);
+
+    margin-bottom: 12px;
+}
+
+#success p {
+    color: #aebbb3;
+
+    font-size: 14px;
+
+    margin: 5px auto;
+
+    max-width: 560px;
+}
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+#downloadBtn {
+    margin-top: 22px;
+    margin-bottom: 0;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 16px;
+    }
+
+    nav {
+        margin-bottom: 40px;
+    }
+
+    .upload {
+        padding: 45px 20px;
+    }
+
+    .preview {
+        grid-template-columns:
+            repeat(auto-fill, minmax(130px, 1fr));
+
+        gap: 12px;
+    }
+
+    .preview img {
+        height: 135px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    body {
+        background:
+            radial-gradient(
+                circle at top,
+                rgba(34, 197, 94, 0.09),
+                transparent 40%
+            ),
+            #07100b;
+    }
+
+    .container {
+        padding: 13px;
+    }
+
+    nav {
+        padding: 10px 0 18px;
+        margin-bottom: 32px;
+    }
+
+    nav a {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    p.sub {
+        font-size: 14px;
+        margin-bottom: 28px;
+        padding: 0 10px;
+    }
+
+    .upload {
+        padding: 38px 16px;
+        border-radius: 18px;
+    }
+
+    .upload h2 {
+        font-size: 21px;
+    }
+
+    .upload p {
+        font-size: 13px;
+    }
+
+    .preview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .preview img {
+        height: 125px;
+        border-radius: 12px;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 360px;
+        padding: 14px 20px;
+        margin-top: 25px;
+    }
+
+    #success {
+        margin-top: 28px;
+        padding: 27px 17px;
+        border-radius: 17px;
+    }
+
+    #success p {
+        font-size: 13px;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 350px) {
+
+    h1 {
+        font-size: 31px;
+    }
+
+    .upload {
+        padding: 32px 12px;
+    }
+
+    .preview img {
+        height: 110px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
+
 <nav>
 <a href="index.html">← Back</a>
-<div class="logo"><span class="os">OS</span> <span class="line">Line</span></div>
+
+<div class="logo">
+<span class="os">OS</span>
+<span class="line">Line</span>
+</div>
 </nav>
 
 <h1>JPG ➜ PDF</h1>
-<p class="sub">Convert JPG Images Into PDF Documents</p>
+
+<p class="sub">
+Convert JPG Images Into PDF Documents
+</p>
 
 <label class="upload" for="fileInput">
+
 <h2>📷 Upload JPG Images</h2>
-<p>Select one or more JPG files</p>
+
+<p>
+Select one or more JPG files
+</p>
+
 </label>
-<input id="fileInput" type="file" accept=".jpg,.jpeg,image/jpeg" multiple>
+
+<input
+id="fileInput"
+type="file"
+accept=".jpg,.jpeg,image/jpeg"
+multiple
+>
 
 <div id="preview" class="preview"></div>
 
-<button class="btn" onclick="generatePDF()">⚡ Generate PDF</button>
+<button
+class="btn"
+onclick="generatePDF()"
+>
+⚡ Generate PDF
+</button>
 
 <div id="status"></div>
 
 <div id="success">
+
 <h2>✓ PDF Generated Successfully</h2>
-<p>Thank you for choosing OS Line.</p>
-<p>Your file has been processed successfully and is ready for download.</p>
+
+<p>
+Thank you for choosing OS Line.
+</p>
+
+<p>
+Your file has been processed successfully and is ready for download.
+</p>
+
 <br>
-<button id="downloadBtn" class="btn">⬇ Download PDF</button>
+
+<button
+id="downloadBtn"
+class="btn"
+>
+⬇ Download PDF
+</button>
+
 </div>
+
 </div>
 
 <script>
-let files=[];
-let pdfBlob=null;
 
-document.getElementById('fileInput').addEventListener('change',e=>{
- files=[...e.target.files];
- const preview=document.getElementById('preview');
- preview.innerHTML='';
- files.forEach(f=>{
-   const img=document.createElement('img');
-   img.src=URL.createObjectURL(f);
-   preview.appendChild(img);
- });
+let files = [];
+let pdfBlob = null;
+
+document
+.getElementById('fileInput')
+.addEventListener('change', e => {
+
+    files = [...e.target.files];
+
+    const preview =
+        document.getElementById('preview');
+
+    preview.innerHTML = '';
+
+    files.forEach(f => {
+
+        const img =
+            document.createElement('img');
+
+        img.src =
+            URL.createObjectURL(f);
+
+        preview.appendChild(img);
+
+    });
+
 });
 
-function fileToDataURL(file){
- return new Promise(resolve=>{
-   const r=new FileReader();
-   r.onload=e=>resolve(e.target.result);
-   r.readAsDataURL(file);
- });
+
+function fileToDataURL(file) {
+
+    return new Promise(resolve => {
+
+        const r = new FileReader();
+
+        r.onload = e =>
+            resolve(e.target.result);
+
+        r.readAsDataURL(file);
+
+    });
+
 }
 
-async function generatePDF(){
- if(files.length===0){alert('Upload JPG files first');return;}
 
- const {jsPDF}=window.jspdf;
- const pdf=new jsPDF();
+async function generatePDF() {
 
- for(let i=0;i<files.length;i++){
-   document.getElementById('status').innerText=`Creating page ${i+1} of ${files.length}`;
+    if (files.length === 0) {
 
-   const data=await fileToDataURL(files[i]);
-   const img=new Image();
+        alert('Upload JPG files first');
 
-   await new Promise(res=>{
-     img.onload=res;
-     img.src=data;
-   });
+        return;
+    }
 
-   const pw=pdf.internal.pageSize.getWidth();
-   const ph=pdf.internal.pageSize.getHeight();
+    const { jsPDF } = window.jspdf;
 
-   const ratio=Math.min(pw/img.width, ph/img.height);
-   const w=img.width*ratio;
-   const h=img.height*ratio;
+    const pdf = new jsPDF();
 
-   if(i>0) pdf.addPage();
+    for (let i = 0; i < files.length; i++) {
 
-   pdf.addImage(data,'JPEG',(pw-w)/2,(ph-h)/2,w,h);
- }
+        document
+        .getElementById('status')
+        .innerText =
+            `Creating page ${i + 1} of ${files.length}`;
 
- pdfBlob=pdf.output('blob');
- document.getElementById('status').innerText='';
- document.getElementById('success').style.display='block';
+        const data =
+            await fileToDataURL(files[i]);
+
+        const img =
+            new Image();
+
+        await new Promise(res => {
+
+            img.onload = res;
+
+            img.src = data;
+
+        });
+
+        const pw =
+            pdf.internal.pageSize.getWidth();
+
+        const ph =
+            pdf.internal.pageSize.getHeight();
+
+        const ratio =
+            Math.min(
+                pw / img.width,
+                ph / img.height
+            );
+
+        const w =
+            img.width * ratio;
+
+        const h =
+            img.height * ratio;
+
+        if (i > 0) {
+
+            pdf.addPage();
+
+        }
+
+        pdf.addImage(
+            data,
+            'JPEG',
+            (pw - w) / 2,
+            (ph - h) / 2,
+            w,
+            h
+        );
+
+    }
+
+    pdfBlob =
+        pdf.output('blob');
+
+    document
+    .getElementById('status')
+    .innerText = '';
+
+    document
+    .getElementById('success')
+    .style.display = 'block';
+
 }
 
-document.addEventListener('click',e=>{
- if(e.target && e.target.id==='downloadBtn'){
-   const a=document.createElement('a');
-   a.href=URL.createObjectURL(pdfBlob);
-   a.download='OSLine-JPG-to-PDF.pdf';
-   a.click();
- }
+
+document.addEventListener('click', e => {
+
+    if (
+        e.target &&
+        e.target.id === 'downloadBtn'
+    ) {
+
+        const a =
+            document.createElement('a');
+
+        a.href =
+            URL.createObjectURL(pdfBlob);
+
+        a.download =
+            'OSLine-JPG-to-PDF.pdf';
+
+        a.click();
+
+    }
+
 });
+
 </script>
+
 </body>
 </html>
