@@ -189,6 +189,7 @@ QR PREVIEW
 
 </body>
 </html>
+
 <style>
 
 *{
@@ -198,38 +199,48 @@ box-sizing:border-box;
 font-family:'Poppins',sans-serif;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
-background:#050816;
-color:white;
+background:
+radial-gradient(circle at 10% 10%, rgba(34,197,94,.08), transparent 30%),
+radial-gradient(circle at 90% 90%, rgba(16,185,129,.06), transparent 30%),
+#06100a;
+color:#f5fff8;
 overflow-x:hidden;
 min-height:100vh;
 position:relative;
 }
 
-/* Background Glow */
+/* =========================
+   BACKGROUND GLOW
+========================= */
 
 .bg-glow{
 position:fixed;
 border-radius:50%;
-filter:blur(120px);
+filter:blur(130px);
 z-index:-1;
+pointer-events:none;
 }
 
 .glow1{
-width:350px;
-height:350px;
-background:#7c3aed55;
-top:-100px;
-left:-100px;
+width:380px;
+height:380px;
+background:rgba(34,197,94,.20);
+top:-120px;
+left:-120px;
 animation:float1 8s infinite ease-in-out;
 }
 
 .glow2{
-width:400px;
-height:400px;
-background:#00bfff33;
-right:-100px;
-bottom:-100px;
+width:450px;
+height:450px;
+background:rgba(16,185,129,.13);
+right:-140px;
+bottom:-140px;
 animation:float2 10s infinite ease-in-out;
 }
 
@@ -245,290 +256,665 @@ transform:translateY(-50px);
 }
 }
 
-/* Navbar */
+/* =========================
+   NAVBAR
+========================= */
 
 nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:25px 5%;
-border-bottom:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
+padding:22px 5%;
+border-bottom:1px solid rgba(74,222,128,.12);
+background:rgba(4,15,9,.65);
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
+position:sticky;
+top:0;
+z-index:100;
 }
+
+/* LOGO */
 
 .logo{
 font-size:35px;
 font-weight:700;
+letter-spacing:-1px;
+white-space:nowrap;
 }
 
 .logo span{
-color:#7c3aed;
+color:#22c55e;
+text-shadow:0 0 20px rgba(34,197,94,.45);
 }
+
+/* NAV LINKS */
 
 .nav-links{
 display:flex;
-gap:40px;
+gap:38px;
+align-items:center;
 }
 
 .nav-links a{
-color:white;
+color:#d8f5df;
 text-decoration:none;
-transition:.3s;
+font-size:15px;
+font-weight:500;
+transition:.3s ease;
+position:relative;
+}
+
+.nav-links a::after{
+content:"";
+position:absolute;
+width:0;
+height:2px;
+left:0;
+bottom:-7px;
+background:#22c55e;
+transition:.3s ease;
 }
 
 .nav-links a:hover{
-color:#7c3aed;
+color:#4ade80;
 }
 
+.nav-links a:hover::after{
+width:100%;
+}
+
+/* BACK BUTTON */
+
 .back-btn{
-padding:14px 25px;
-border-radius:15px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.1);
-color:white;
+padding:13px 23px;
+border-radius:14px;
+background:rgba(34,197,94,.07);
+border:1px solid rgba(74,222,128,.20);
+color:#eaffef;
 text-decoration:none;
-transition:.3s;
+font-size:14px;
+font-weight:500;
+transition:.3s ease;
+white-space:nowrap;
 }
 
 .back-btn:hover{
-box-shadow:0 0 20px #7c3aed;
+background:rgba(34,197,94,.14);
+border-color:rgba(74,222,128,.55);
+box-shadow:
+0 0 20px rgba(34,197,94,.20),
+inset 0 0 20px rgba(34,197,94,.05);
+transform:translateY(-2px);
 }
 
-/* Main */
+/* =========================
+   MAIN CONTAINER
+========================= */
 
 .container{
 display:grid;
-grid-template-columns:1fr 1.3fr;
+grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);
 gap:35px;
-padding:40px 5%;
+padding:55px 5%;
+max-width:1600px;
+margin:auto;
 }
 
-/* Cards */
+/* =========================
+   LEFT PANEL
+========================= */
 
-.card,
-.right-panel{
-background:rgba(255,255,255,.03);
-backdrop-filter:blur(30px);
-border:1px solid rgba(255,255,255,.08);
-border-radius:25px;
-padding:30px;
-margin-bottom:25px;
-box-shadow:
-0 0 30px rgba(124,58,237,.12);
+.left-panel{
+min-width:0;
 }
 
-/* Heading */
+/* =========================
+   HEADINGS
+========================= */
 
 h1{
-font-size:55px;
-margin-bottom:10px;
+font-size:clamp(38px,5vw,62px);
+line-height:1.1;
+letter-spacing:-2px;
+margin-bottom:13px;
+font-weight:700;
 }
 
 h1 span{
 background:linear-gradient(
 90deg,
-#7c3aed,
-#00bfff);
+#22c55e,
+#4ade80,
+#10b981
+);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+background-clip:text;
+}
+
+h3{
+font-size:19px;
+font-weight:600;
+color:#ecfff1;
 }
 
 p{
-color:#bbb;
-margin-bottom:25px;
+color:#9fb5a5;
+margin-bottom:28px;
+font-size:15px;
+line-height:1.7;
 }
 
-/* Tabs */
+/* =========================
+   GLASS CARDS
+========================= */
+
+.card,
+.right-panel{
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.045),
+rgba(255,255,255,.018)
+);
+backdrop-filter:blur(30px);
+-webkit-backdrop-filter:blur(30px);
+border:1px solid rgba(74,222,128,.12);
+border-radius:24px;
+padding:30px;
+margin-bottom:25px;
+
+box-shadow:
+0 15px 50px rgba(0,0,0,.25),
+0 0 35px rgba(34,197,94,.07);
+
+transition:.35s ease;
+}
+
+.card:hover,
+.right-panel:hover{
+border-color:rgba(74,222,128,.22);
+box-shadow:
+0 20px 60px rgba(0,0,0,.30),
+0 0 40px rgba(34,197,94,.10);
+}
+
+/* =========================
+   TABS
+========================= */
 
 .tabs{
 display:flex;
 flex-wrap:wrap;
 gap:10px;
-margin:20px 0;
+margin:22px 0;
 }
 
 .tab{
-background:#111827;
-border:none;
-color:white;
-padding:12px 20px;
-border-radius:15px;
+background:#0c1b11;
+border:1px solid rgba(74,222,128,.10);
+color:#c9dfcf;
+padding:11px 18px;
+border-radius:13px;
 cursor:pointer;
-transition:.3s;
+transition:.3s ease;
+font-size:14px;
+font-weight:500;
 }
 
-.tab:hover,
-.active{
-background:#7c3aed;
+.tab:hover{
+background:rgba(34,197,94,.10);
+border-color:rgba(74,222,128,.35);
+color:#4ade80;
+transform:translateY(-2px);
 }
 
-/* Inputs */
+.tab.active{
+background:linear-gradient(
+135deg,
+#16a34a,
+#22c55e
+);
+border-color:#4ade80;
+color:white;
+box-shadow:
+0 6px 20px rgba(34,197,94,.22);
+}
+
+/* =========================
+   INPUTS
+========================= */
 
 input{
 width:100%;
-padding:18px;
-border-radius:15px;
-background:#111827;
-border:1px solid rgba(255,255,255,.08);
-color:white;
-margin-top:15px;
+padding:16px 18px;
+border-radius:14px;
+background:#09170d;
+border:1px solid rgba(74,222,128,.12);
+color:#effff3;
+margin-top:12px;
 margin-bottom:20px;
+outline:none;
+font-size:15px;
+transition:.3s ease;
 }
+
+input::placeholder{
+color:#6f8576;
+}
+
+input:focus{
+border-color:rgba(74,222,128,.65);
+box-shadow:
+0 0 0 3px rgba(34,197,94,.08),
+0 0 25px rgba(34,197,94,.08);
+background:#0a1b0f;
+}
+
+/* COLOR INPUT */
 
 input[type=color]{
 height:55px;
+padding:5px;
+cursor:pointer;
+background:#09170d;
+border-radius:13px;
 }
 
-/* Preview */
+/* FILE INPUT */
+
+input[type=file]{
+cursor:pointer;
+padding:12px;
+}
+
+/* =========================
+   LABELS
+========================= */
+
+label{
+display:block;
+color:#b8d5c0;
+font-size:14px;
+font-weight:500;
+margin-top:5px;
+margin-bottom:5px;
+}
+
+/* =========================
+   QR PREVIEW
+========================= */
 
 .preview{
 display:flex;
 justify-content:center;
 align-items:center;
-padding:40px;
+padding:45px 25px;
+min-height:410px;
 }
 
 #qrcode{
 width:350px;
 height:350px;
+max-width:100%;
 background:white;
-border-radius:30px;
+border-radius:25px;
 display:flex;
 justify-content:center;
 align-items:center;
-color:black;
-font-size:25px;
+color:#111;
+font-size:24px;
+font-weight:600;
 
 box-shadow:
-0 0 30px #7c3aed,
-0 0 80px rgba(124,58,237,.4);
+0 0 30px rgba(34,197,94,.35),
+0 0 80px rgba(34,197,94,.15);
+
+transition:.3s ease;
+overflow:hidden;
 }
 
-/* Buttons */
+#qrcode:hover{
+box-shadow:
+0 0 40px rgba(34,197,94,.45),
+0 0 100px rgba(34,197,94,.18);
+transform:scale(1.01);
+}
+
+/* Make generated QR fit nicely */
+
+#qrcode img,
+#qrcode canvas{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 
 .buttons{
 display:flex;
-gap:15px;
-margin-top:30px;
+gap:13px;
+margin-top:25px;
 }
 
 .download-btn,
 .copy-btn,
 .share-btn{
 flex:1;
-padding:18px;
+padding:16px;
 border:none;
-border-radius:18px;
+border-radius:15px;
 cursor:pointer;
-font-size:16px;
-transition:.3s;
+font-size:14px;
+font-family:'Poppins',sans-serif;
+font-weight:600;
+transition:.3s ease;
 }
+
+/* DOWNLOAD */
 
 .download-btn{
-background:
-linear-gradient(
-90deg,
-#c026d3,
-#2563eb);
+background:linear-gradient(
+135deg,
+#15803d,
+#22c55e
+);
 color:white;
-}
-
-.copy-btn,
-.share-btn{
-background:#111827;
-color:white;
+box-shadow:
+0 8px 25px rgba(34,197,94,.16);
 }
 
 .download-btn:hover{
-transform:translateY(-4px);
-box-shadow:0 0 25px #7c3aed;
+transform:translateY(-3px);
+box-shadow:
+0 12px 30px rgba(34,197,94,.28);
 }
 
-/* Features */
+/* COPY + SHARE */
+
+.copy-btn,
+.share-btn{
+background:#0b1b10;
+color:#dff5e5;
+border:1px solid rgba(74,222,128,.13);
+}
+
+.copy-btn:hover,
+.share-btn:hover{
+background:rgba(34,197,94,.10);
+border-color:rgba(74,222,128,.35);
+color:#4ade80;
+transform:translateY(-3px);
+}
+
+/* =========================
+   FEATURES
+========================= */
 
 .features{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:20px;
+gap:15px;
 margin-top:30px;
 }
 
 .feature{
-background:rgba(255,255,255,.03);
-padding:20px;
-border-radius:18px;
+background:
+rgba(34,197,94,.035);
+border:1px solid rgba(74,222,128,.09);
+padding:18px;
+border-radius:16px;
 text-align:center;
+color:#cde7d4;
+font-size:14px;
+transition:.3s ease;
 }
 
-/* Footer */
+.feature:hover{
+background:rgba(34,197,94,.08);
+border-color:rgba(74,222,128,.25);
+transform:translateY(-3px);
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
 text-align:center;
-padding:30px;
-color:#888;
+padding:30px 20px;
+color:#718276;
+font-size:13px;
+border-top:1px solid rgba(74,222,128,.08);
+background:rgba(4,15,9,.35);
 }
 
-/* Mobile */
+/* =========================
+   TABLET
+========================= */
 
-@media(max-width:1000px){
+@media(max-width:1100px){
 
 .container{
 grid-template-columns:1fr;
+max-width:850px;
+padding:45px 5%;
+}
+
+.nav-links{
+gap:20px;
+}
+
+.right-panel{
+margin-bottom:0;
+}
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+nav{
+padding:17px 20px;
+}
+
+.logo{
+font-size:28px;
 }
 
 .nav-links{
 display:none;
 }
 
+.back-btn{
+padding:10px 15px;
+font-size:12px;
+border-radius:11px;
+}
+
+.container{
+display:block;
+padding:35px 18px;
+}
+
+h1{
+font-size:38px;
+letter-spacing:-1.2px;
+}
+
+p{
+font-size:14px;
+margin-bottom:22px;
+}
+
+.card,
+.right-panel{
+padding:21px;
+border-radius:20px;
+}
+
+.tabs{
+gap:8px;
+}
+
+.tab{
+padding:10px 13px;
+font-size:12px;
+border-radius:11px;
+}
+
+.preview{
+padding:30px 10px;
+min-height:300px;
+}
+
+#qrcode{
+width:280px;
+height:280px;
+border-radius:20px;
+font-size:19px;
+}
+
 .buttons{
 flex-direction:column;
+gap:10px;
+}
+
+.download-btn,
+.copy-btn,
+.share-btn{
+width:100%;
+padding:15px;
+}
+
+.features{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.feature{
+padding:15px 8px;
+font-size:12px;
+}
+
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:420px){
+
+nav{
+padding:15px;
+}
+
+.logo{
+font-size:25px;
+}
+
+.back-btn{
+padding:9px 12px;
+font-size:11px;
+}
+
+.container{
+padding:28px 13px;
+}
+
+h1{
+font-size:32px;
+}
+
+.card,
+.right-panel{
+padding:17px;
+border-radius:18px;
+}
+
+h3{
+font-size:16px;
+}
+
+.tabs{
+gap:7px;
+}
+
+.tab{
+padding:9px 11px;
+font-size:11px;
+}
+
+input{
+padding:14px;
+font-size:13px;
+}
+
+#qrcode{
+width:230px;
+height:230px;
+border-radius:17px;
+}
+
+.preview{
+padding:25px 5px;
+min-height:260px;
 }
 
 .features{
 grid-template-columns:1fr;
 }
 
-h1{
-font-size:40px;
+.feature{
+padding:14px;
 }
 
-#qrcode{
-width:280px;
-height:280px;
+footer{
+padding:25px 15px;
+font-size:11px;
+}
+
+}
+
+/* =========================
+   VERY SMALL DEVICES
+========================= */
+
+@media(max-width:320px){
+
+.logo{
+font-size:22px;
 }
 
 .back-btn{
-padding:12px 18px;
-font-size:14px;
-}
-
-}
-
-/* Small Phones */
-
-@media(max-width:500px){
-
-nav{
-padding:20px;
+padding:8px 10px;
+font-size:10px;
 }
 
 h1{
-font-size:33px;
-}
-
-.card,
-.right-panel{
-padding:20px;
+font-size:29px;
 }
 
 #qrcode{
-width:230px;
-height:230px;
+width:205px;
+height:205px;
+}
+
+.tab{
+padding:8px 9px;
 }
 
 }
 
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 
