@@ -42,6 +42,7 @@ body{
     inset:0;
     z-index:-10;
     overflow:hidden;
+
     background:
         radial-gradient(
             circle at 50% 0%,
@@ -55,13 +56,17 @@ body{
     border-radius:50%;
     filter:blur(110px);
     opacity:.45;
-    animation:float 16s ease-in-out infinite;
+
+    animation:
+        float 16s ease-in-out infinite;
 }
 
 .blob1{
     width:420px;
     height:420px;
+
     background:#16a34a;
+
     top:-160px;
     left:-130px;
 }
@@ -69,19 +74,26 @@ body{
 .blob2{
     width:380px;
     height:380px;
+
     background:#059669;
+
     bottom:-150px;
     right:-120px;
+
     animation-delay:5s;
 }
 
 .blob3{
     width:320px;
     height:320px;
+
     background:#22c55e;
+
     top:42%;
     left:48%;
+
     opacity:.18;
+
     animation-delay:9s;
 }
 
@@ -103,12 +115,6 @@ body{
         transform:
             translate3d(-40px,70px,0)
             scale(.92);
-    }
-
-    100%{
-        transform:
-            translate3d(0,0,0)
-            scale(1);
     }
 
 }
@@ -284,8 +290,6 @@ nav{
     position:relative;
 }
 
-/* glowing top line */
-
 .hero::before{
     content:"";
 
@@ -421,10 +425,11 @@ nav{
 }
 
 /* =====================================================
-   SEARCH
+   SEARCH BOX
 ===================================================== */
 
 .search-box{
+    width:100%;
     max-width:720px;
 
     margin:
@@ -442,6 +447,7 @@ nav{
 
     from{
         opacity:0;
+
         transform:
             translateY(20px)
             scale(.97);
@@ -449,6 +455,7 @@ nav{
 
     to{
         opacity:1;
+
         transform:
             translateY(0)
             scale(1);
@@ -456,32 +463,39 @@ nav{
 
 }
 
+/* =====================================================
+   CLEAN SEARCH INPUT
+===================================================== */
+
 .search-box input{
+
     width:100%;
 
+    height:58px;
+
     padding:
-        19px 25px;
+        0 24px;
 
     border:none;
     outline:none;
 
-    border-radius:50px;
+    border-radius:16px;
 
     color:#effff3;
 
     font-size:15px;
 
     background:
-        rgba(7,25,13,.78);
+        rgba(7,25,13,.88);
 
     backdrop-filter:blur(25px);
     -webkit-backdrop-filter:blur(25px);
 
     border:
-        1px solid rgba(74,222,128,.22);
+        1px solid rgba(74,222,128,.20);
 
     box-shadow:
-        0 0 30px rgba(34,197,94,.08),
+        0 8px 30px rgba(0,0,0,.20),
         inset 0 0 20px rgba(34,197,94,.025);
 
     transition:
@@ -491,17 +505,19 @@ nav{
 }
 
 .search-box input:hover{
+
     border-color:
-        rgba(74,222,128,.4);
+        rgba(74,222,128,.38);
 }
 
 .search-box input:focus{
+
     border-color:
-        rgba(74,222,128,.7);
+        rgba(74,222,128,.65);
 
     box-shadow:
         0 0 0 4px rgba(34,197,94,.07),
-        0 0 35px rgba(34,197,94,.18);
+        0 0 35px rgba(34,197,94,.16);
 
     transform:
         translateY(-2px);
@@ -513,55 +529,65 @@ nav{
 
 /* =====================================================
    SEARCH RESULTS
+   HIDDEN BY DEFAULT
 ===================================================== */
 
 #toolList{
+
+    display:none;
+
     position:absolute;
 
     left:20px;
     right:20px;
 
-    top:70px;
+    top:68px;
 
-    display:flex;
-    flex-direction:column;
+    max-height:300px;
 
-    gap:5px;
+    overflow-y:auto;
 
     padding:8px;
 
     background:
-        rgba(5,20,10,.94);
+        rgba(4,18,9,.97);
 
     border:
-        1px solid rgba(74,222,128,.15);
+        1px solid rgba(74,222,128,.18);
 
-    border-radius:18px;
+    border-radius:16px;
 
     backdrop-filter:blur(25px);
     -webkit-backdrop-filter:blur(25px);
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,.35);
+        0 20px 55px rgba(0,0,0,.45);
 
-    z-index:20;
+    z-index:50;
 }
 
-/* Search result */
+/* =====================================================
+   SEARCH RESULT
+===================================================== */
 
 .tool{
+
     display:block;
 
     padding:
-        13px 17px;
+        14px 17px;
 
-    border-radius:12px;
+    margin:3px 0;
 
-    color:#cce3d2;
+    border-radius:11px;
+
+    color:#d8eadd;
 
     text-decoration:none;
 
     font-size:14px;
+
+    font-weight:500;
 
     border:
         1px solid transparent;
@@ -574,16 +600,33 @@ nav{
 }
 
 .tool:hover{
+
     color:#4ade80;
 
     background:
         rgba(34,197,94,.08);
 
     border-color:
-        rgba(74,222,128,.16);
+        rgba(74,222,128,.18);
 
     transform:
         translateX(5px);
+}
+
+/* =====================================================
+   NO RESULT MESSAGE
+===================================================== */
+
+.no-result{
+
+    padding:
+        15px;
+
+    color:#819589;
+
+    text-align:center;
+
+    font-size:13px;
 }
 
 /* =====================================================
@@ -606,6 +649,7 @@ nav{
 }
 
 .section-title::after{
+
     content:"";
 
     display:block;
@@ -644,6 +688,7 @@ nav{
 ===================================================== */
 
 .tools{
+
     width:90%;
     max-width:1150px;
 
@@ -664,6 +709,7 @@ nav{
 ===================================================== */
 
 .card{
+
     position:relative;
 
     display:block;
@@ -711,8 +757,6 @@ nav{
         background .4s ease;
 }
 
-/* stagger */
-
 .card:nth-child(1){
     animation-delay:.10s;
 }
@@ -749,6 +793,7 @@ nav{
 ===================================================== */
 
 .card::before{
+
     content:"";
 
     position:absolute;
@@ -785,6 +830,7 @@ nav{
 ===================================================== */
 
 .card::after{
+
     content:"";
 
     position:absolute;
@@ -809,6 +855,7 @@ nav{
 }
 
 .card:hover::after{
+
     transform:
         scale(2.5);
 }
@@ -845,6 +892,7 @@ nav{
 
 .card h3,
 .card h2{
+
     margin-bottom:12px;
 
     font-size:21px;
@@ -943,6 +991,27 @@ footer p{
 }
 
 /* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:900px){
+
+    nav{
+        padding:
+            18px 25px;
+    }
+
+    .nav-links{
+        gap:20px;
+    }
+
+    .tools{
+        width:92%;
+    }
+
+}
+
+/* =====================================================
    MOBILE
 ===================================================== */
 
@@ -1006,10 +1075,14 @@ footer p{
 
     .search-box input{
 
+        height:54px;
+
         padding:
-            16px 20px;
+            0 18px;
 
         font-size:14px;
+
+        border-radius:14px;
     }
 
     #toolList{
@@ -1017,7 +1090,9 @@ footer p{
         left:15px;
         right:15px;
 
-        top:62px;
+        top:64px;
+
+        max-height:280px;
     }
 
     .section-title{
@@ -1069,7 +1144,8 @@ footer p{
 @media(max-width:420px){
 
     nav{
-        padding:15px 12px;
+        padding:
+            15px 12px;
     }
 
     .nav-links{
@@ -1077,7 +1153,9 @@ footer p{
     }
 
     .nav-links a{
-        margin:0 5px;
+        margin:
+            0 5px;
+
         font-size:11px;
     }
 
@@ -1086,6 +1164,7 @@ footer p{
     }
 
     .hero{
+
         padding:
             60px 15px 30px;
     }
@@ -1099,20 +1178,29 @@ footer p{
     }
 
     .search-box{
+
         width:100%;
-        padding:0 12px;
+
+        padding:
+            0 12px;
     }
 
     .search-box input{
+
+        height:52px;
+
         padding:
-            15px 17px;
+            0 16px;
 
         font-size:13px;
     }
 
     #toolList{
+
         left:12px;
         right:12px;
+
+        top:62px;
     }
 
     .tools{
@@ -1234,7 +1322,7 @@ footer p{
 
 
 <!-- =====================================================
-     SEARCH
+     CLEAN SEARCH ENGINE
 ===================================================== -->
 
 <div class="search-box">
@@ -1243,32 +1331,10 @@ footer p{
         type="text"
         id="search"
         placeholder="🔍 Search tools..."
-        onkeyup="searchTools()"
+        autocomplete="off"
     >
 
-    <div id="toolList">
-
-        <a href="png-to-pdf.html" class="tool">
-            PNG to PDF
-        </a>
-
-        <a href="pdf-to-jpg.html" class="tool">
-            PDF to JPG
-        </a>
-
-        <a href="jpg-to-pdf-full.html" class="tool">
-            JPG to PDF
-        </a>
-
-        <a href="pdf-editor.html" class="tool">
-            PDF Editor {BETA VERSON}
-        </a>
-
-        <a href="qr-generator.html" class="tool">
-            QR Generator Pro
-        </a>
-
-    </div>
+    <div id="toolList"></div>
 
 </div>
 
@@ -1398,45 +1464,208 @@ footer p{
 
 
 <!-- =====================================================
-     SEARCH JAVASCRIPT
+     SEARCH ENGINE JAVASCRIPT
 ===================================================== -->
 
 <script>
 
+/* =====================================================
+   ALL OS LINE TOOLS
+
+   Add future tools here.
+===================================================== */
+
+const allTools = [
+
+    {
+        name: "PNG to PDF",
+        icon: "🖼",
+        url: "png-to-pdf.html"
+    },
+
+    {
+        name: "PDF to JPG",
+        icon: "📄",
+        url: "pdf-to-jpg.html"
+    },
+
+    {
+        name: "JPG to PDF",
+        icon: "📷",
+        url: "jpg-to-pdf-full.html"
+    },
+
+    {
+        name: "PDF Editor",
+        icon: "✏️",
+        url: "pdf-editor.html"
+    },
+
+    {
+        name: "QR Generator Pro",
+        icon: "🔳",
+        url: "qr-generator.html"
+    }
+
+];
+
+
+/* =====================================================
+   SEARCH ELEMENTS
+===================================================== */
+
+const searchInput =
+    document.getElementById("search");
+
+const toolList =
+    document.getElementById("toolList");
+
+
+/* =====================================================
+   SEARCH FUNCTION
+===================================================== */
+
 function searchTools(){
 
-    let input =
-        document
-        .getElementById("search")
-        .value
+    const query =
+        searchInput.value
+        .trim()
         .toLowerCase();
 
-    let tools =
-        document
-        .querySelectorAll(".tool");
+
+    /* Hide results if search is empty */
+
+    if(query === ""){
+
+        toolList.innerHTML = "";
+
+        toolList.style.display = "none";
+
+        return;
+
+    }
 
 
-    tools.forEach(tool=>{
+    /* Find matching tools */
 
-        if(
-            tool.innerText
+    const matches =
+        allTools.filter(tool =>
+
+            tool.name
             .toLowerCase()
-            .includes(input)
-        ){
+            .includes(query)
 
-            tool.style.display="block";
+        );
 
-        }
 
-        else{
+    /* Clear old results */
 
-            tool.style.display="none";
+    toolList.innerHTML = "";
 
-        }
+
+    /* No result */
+
+    if(matches.length === 0){
+
+        toolList.innerHTML = `
+
+            <div class="no-result">
+
+                No tools found for
+                "<strong>${query}</strong>"
+
+            </div>
+
+        `;
+
+        toolList.style.display = "block";
+
+        return;
+
+    }
+
+
+    /* Show matching tools */
+
+    matches.forEach(tool =>{
+
+        const result =
+            document.createElement("a");
+
+
+        result.className = "tool";
+
+        result.href = tool.url;
+
+        result.innerHTML = `
+
+            ${tool.icon}
+            &nbsp;
+            ${tool.name}
+
+        `;
+
+
+        toolList.appendChild(result);
 
     });
 
+
+    toolList.style.display = "block";
+
 }
+
+
+/* =====================================================
+   LIVE SEARCH
+===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    searchTools
+);
+
+
+/* =====================================================
+   CLOSE SEARCH WHEN CLICKING OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            !event.target.closest(".search-box")
+        ){
+
+            toolList.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC KEY CLOSES SEARCH
+===================================================== */
+
+searchInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            toolList.style.display =
+                "none";
+
+            searchInput.blur();
+
+        }
+
+    }
+);
 
 </script>
 
